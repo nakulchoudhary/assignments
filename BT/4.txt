@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct P{
+	int v;
+	int w;
+};
+
+
+void fx(int n,vector<P> arr,int MW){
+	vector<int> dp(MW+1,0);
+	for(int i = 0;i<n;i++){
+		P temp = arr[i];
+		for(int j = MW; j >=0 ;j--){
+			if(j >= temp.w){
+				dp[j] = max(dp[j],dp[j-temp.w]+temp.v);
+			}
+		}
+	}
+	cout<<dp[MW];
+}
+
+int main(){
+	int n;
+	cout<<"Number : ";
+	cin>>n;
+	vector<P> arr(n);
+	for(int i = 0;i<n;i++){
+		P temp;
+		cin>>temp.v>>temp.w;
+		arr[i] = temp;
+	}
+	cout<<"Max weight: ";
+	int MW;
+	cin>>MW;
+	fx(n,arr,MW);
+	return 0;
+}

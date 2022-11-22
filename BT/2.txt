@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Job{
+	string name;
+	int dead;
+	int prof;
+};
+bool cmp(Job l,Job r){
+	return l.prof > r.prof;
+}
+void Job_sequence(int n,vector<Job> arr){
+	sort(arr.begin(),arr.end(),cmp);
+	vector<Job> F(n);
+	vector<bool> visited(n,false);
+	for(int i = 0;i<n;i++){
+		Job t = arr[i];
+		int tdead = min(t.dead-1,n-1);
+		while(tdead>=0){
+			if(visited[tdead] == false){
+				F[tdead] = arr[i];
+				visited[tdead] = true;
+				break;
+			}
+			tdead--;
+		}
+	}
+	cout<<"sequence : ";
+	int mprofit = 0;
+	for(int i = 0;i<n;i++){
+		if(visited[i]){
+			Job t = F[i];
+			cout<<t.name<<"-->";
+			mprofit += t.prof;
+		}
+	}
+	cout<<"\n Max profit: "<<mprofit;
+}
+
+int main(){
+	int n;
+	cout<<"Number of Jobs: ";
+	cin>>n;
+	vector<Job> arr(n);
+	for(int i = 0;i<n;i++){
+		Job temp;
+		cin>>temp.name>>temp.dead>>temp.prof;
+		arr[i] = temp;
+	}
+	Job_sequence(n,arr);
+	return 0;
+}

@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct P{
+	int v;
+	int w;
+};
+
+bool cmp(P l,P r){
+	double lv = l.v/l.w;
+	double rv = r.v/r.w;
+	return lv > rv;
+}
+
+void fx(int n,vector<P> arr){
+	sort(arr.begin(),arr.end(),cmp);
+	double Mw;
+	cout<<"Max weight : ";
+	cin>>Mw;
+	double value = 0;
+	for(int i = 0;i<n;i++){
+		P t = arr[i];
+		if(Mw >= t.w){
+			value += t.v;
+			Mw -= t.w;
+		}
+		else{
+			double rv = t.v/t.w;
+			value += rv*Mw;
+			break;
+		}
+	}
+	cout<<value;
+}
+
+int main(){
+	int n;
+	cout<<"Number : ";
+	cin>>n;
+	vector<P> arr(n);
+	for(int i = 0;i<n;i++){
+		P temp;
+		cin>>temp.v>>temp.w;
+		arr[i] = temp;
+	}
+	fx(n,arr);
+	return 0;
+}
